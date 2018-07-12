@@ -19,8 +19,8 @@ class AddColumnsToNewsTable extends Migration
             $table->string('lead')->nullable();
             $table->string('photo')->nullable();
             $table->mediumText('content')->nullable();
-            $table->boolean('is_published')->nullable();
-            $table->boolean('is_seo_publised')->nullable();
+            $table->boolean('is_published')->default(0);
+            $table->boolean('is_seo_publised')->default(0);
         });        //
     }
 
