@@ -10411,17 +10411,7 @@ a.text-dark:focus {
   }
 }
 
-body {
-  padding-top: 5em;
-  height: 100vh;
-  background: #0c2b29;
-  background: -webkit-gradient(left top, right top, color-stop(0%, #0c2b29), color-stop(100%, #15404d));
-  background: -webkit-gradient(linear, left top, right top, from(#0c2b29), to(#15404d));
-  background: linear-gradient(to right, #0c2b29 0%, #15404d 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0c2b29', endColorstr='#15404d', GradientType=1 );
-}
-
-h1.title {
-  color: #fff;
+nav#navbar {
+  margin-bottom: 3em;
 }
 
