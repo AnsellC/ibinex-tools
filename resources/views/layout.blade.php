@@ -9,42 +9,75 @@
     <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
+<header>
+    <nav id="navbar" class="navbar has-shadow is-spaced">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="/">
+                    Ibinex News Tools
+                </a>
+            </div>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="/anime">
+                        <span class="icon has-text-primary">
+                            <i class="fas fa-book"></i>
+                        </span>
+                        <span>News Tracker</span>
+                    </a>
+
+                </div>
+                
+                <div class="navbar-end">
+                        @auth
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                {{ Auth::user()->name }}
+                            </a>
+                            
+                            <div class="navbar-dropdown is-right">
+                    
+                                <a class="navbar-item" href="/logout">
+                                    <span>
+                                        <span class="icon has-text-bootstrap">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                        </span>
+                                        <strong>Log Out</strong>
+
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    @else
+                        <a class="navbar-item" href="/register">
+                            <span class="icon has-text-primary"><i class="fas fa-user-plus"></i></span>
+                            <span>Register</span>
+                        </a>
+                        <a class="navbar-item" href="/login">
+                            <span class="icon has-text-danger"><i class="fas fa-sign-in-alt"></i></span>
+                            <span>Login</span>
+                        </a>
+
+                    @endauth
+                </div>
+            </div>     
+        </div>        
+    </nav>                       
+</header>
     <div class="container">
         <div class="columns">
-            <div class="column is-three-fifths is-offset-one-fifth">
-                    <h1 class="title">Login</h1>
+            <div class="column">
                     <div class="card">
                         
                             <div class="card-content">
-                                <div class="content">
-                                    <form method="POST" action="/login">
-                                        <div class="field">
-                                            <p class="control has-icons-left">
-                                                <input class="input" type="email" placeholder="Email">
-                                                <span class="icon is-small is-left">
-                                                <i class="fas fa-envelope"></i>
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="field">
-                                            <p class="control has-icons-left">
-                                                <input class="input" type="password" placeholder="Password">
-                                                <span class="icon is-small is-left">
-                                                <i class="fas fa-key"></i>
-                                                </span>
-                                            </p>
-                                        </div> 
-                                        <div class="field">
-                                            <p class="control">
-                                                <button class="button is-success">
-                                                Login
-                                                </button>
-                                            </p>
-                                        </div>                                      
-                                    </form>
-                                </div>
+                                @yield('content')
                             </div>
-                        </div>
+                    </div>
             </div>
         </div>
     </div>
