@@ -18,7 +18,14 @@ Route::get('/login', function () {
 
 })->name('login')->middleware('guest');
 
-Route::post('/login', function(){
+Route::get('/logout', function() {
+
+    Auth::logout();
+    return redirect('/');
+    
+})->middleware('auth');
+
+Route::post('/login', function() {
 
     request()->validate([
         'email' => 'required|email',
@@ -54,7 +61,7 @@ Route::middleware(['auth'])->group(function() {
         'as'    => 'news.assign-save',
         'uses'  => 'NewsController@storeAssign'
     ]);
-    
+
     Route::resources([
         'news'  => 'NewsController'
     ]);
