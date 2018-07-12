@@ -15,12 +15,12 @@ class AddColumnsToNewsTable extends Migration
     {
         Schema::table('news', function (Blueprint $table) {
             $table->unsignedInteger('user_id')->nullable();
-            $table->string('title');
-            $table->string('lead');
-            $table->string('photo');
-            $table->mediumText('content');
-            $table->boolean('is_published');
-            $table->boolean('is_seo_publised');
+            $table->string('title')->nullable();
+            $table->string('lead')->nullable();
+            $table->string('photo')->nullable();
+            $table->mediumText('content')->nullable();
+            $table->boolean('is_published')->nullable();
+            $table->boolean('is_seo_publised')->nullable();
         });        //
     }
 
