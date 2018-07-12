@@ -74,11 +74,15 @@
     <div class="container">
         <div class="columns">
             <div class="column">
+                    @if(View::hasSection('title'))
+                        <h1 class="title">@yield('title')</h1>
+                    @endif
                     <div class="card">
-                        
-                            <div class="card-content">
-                                @yield('content')
-                            </div>
+                        <div class="card-content">
+                            @include('global.msg')
+                            @include('global.error')
+                            @yield('content')
+                        </div>
                     </div>
             </div>
         </div>

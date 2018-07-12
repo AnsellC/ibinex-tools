@@ -3,6 +3,11 @@
   background: #f7f7f7;
 }
 
+table.table td,
+table.table th {
+  text-align: center;
+}
+
 div.card {
   border: 2px solid #f5f5f5;
   -webkit-box-shadow: none;
