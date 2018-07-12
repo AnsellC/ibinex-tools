@@ -11,17 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-
-    return view('dashboard');
-
-})->middleware('auth');
 
 Route::get('/login', function () {
 
     return view('login');
 
-})->name('login');
+})->name('login')->middleware('guest');
 
 Route::post('/login', function(){
 
@@ -39,4 +34,16 @@ Route::post('/login', function(){
 
     return back()->withErrors(['message' => 'Invalid username/password.']);
     
+});
+
+Route::middleware(['auth'])->group(function() {
+
+    //homepage
+    Route::get('/', function () {
+
+        return view('dashboard');
+    
+    });
+    
+
 });
