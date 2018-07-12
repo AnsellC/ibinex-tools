@@ -16,21 +16,32 @@
                 <a class="navbar-item" href="/">
                     Ibinex News Tools
                 </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
             </div>
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="/anime">
+                    <a class="navbar-item" href="/news">
                         <span class="icon has-text-primary">
                             <i class="fas fa-book"></i>
                         </span>
                         <span>News Tracker</span>
                     </a>
-
+                    <a class="navbar-item" href="/anime">
+                        <span class="icon has-text-danger">
+                            <i class="fas fa-level-up-alt"></i>
+                        </span>
+                        <span>SEO Tools</span>
+                    </a>
+                    <a class="navbar-item" href="/anime">
+                        <span class="icon has-text-warning">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        <span>Staff</span>
+                    </a>                    
                 </div>
                 
                 <div class="navbar-end">
@@ -53,22 +64,13 @@
                                 </a>
                             </div>
                         </div>
-                    @else
-                        <a class="navbar-item" href="/register">
-                            <span class="icon has-text-primary"><i class="fas fa-user-plus"></i></span>
-                            <span>Register</span>
-                        </a>
-                        <a class="navbar-item" href="/login">
-                            <span class="icon has-text-danger"><i class="fas fa-sign-in-alt"></i></span>
-                            <span>Login</span>
-                        </a>
-
                     @endauth
                 </div>
             </div>     
         </div>        
     </nav>                       
 </header>
+<section id="content" class="section">
     <div class="container">
         <div class="columns">
             <div class="column">
@@ -81,5 +83,6 @@
             </div>
         </div>
     </div>
+</section>
 </body>
 </html>
