@@ -44,9 +44,20 @@ Route::middleware(['auth'])->group(function() {
         return view('dashboard');
     
     });
+ 
+    Route::get('/news/assign', [
+        'as'    => 'news.assign',
+        'uses'  => 'NewsController@assign'
+    ]);
+
+    Route::post('/news/assign', [
+        'as'    => 'news.assign-save',
+        'uses'  => 'NewsController@storeAssign'
+    ]);
     
     Route::resources([
         'news'  => 'NewsController'
     ]);
+
 
 });
