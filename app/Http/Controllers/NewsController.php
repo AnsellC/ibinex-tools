@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\News;
+use App\User;
 class NewsController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        $news = News::paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+        return view('news.index')->with('newsitems', $news);
     }
 
     /**
@@ -24,6 +26,7 @@ class NewsController extends Controller
     public function create()
     {
         //
+        return view('news.create');
     }
 
     /**
@@ -80,5 +83,32 @@ class NewsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function assign()
+    {
+        $users = User::all();
+        return view('news.assign')->with('users', $users);
+    }
+
+    public function storeAssign()
+    {
+        $user = User::findOrFail(request('user_id'));
+
+        request()->validate([
+
+            'URL'   => 'required|url',
+            'user_id'   => 'required|exists:users,id'
+
+        ]);
+
+        $news = new News;
+        $news->url = request('URL');
+        $news->user_id = request('user_id');
+        $news->save();
+
+        return redirect('/news')->withMsg('News source added to tracker.');
+
     }
 }
