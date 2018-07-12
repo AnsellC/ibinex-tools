@@ -22,7 +22,7 @@ Route::get('/logout', function() {
 
     Auth::logout();
     return redirect('/');
-    
+
 })->middleware('auth');
 
 Route::post('/login', function() {
@@ -36,7 +36,7 @@ Route::post('/login', function() {
 
     if (Auth::attempt($credentials)) {
 
-        return redirect()->intended('dashboard');
+        return redirect()->intended('/news');
     }    
 
     return back()->withErrors(['message' => 'Invalid username/password.']);
