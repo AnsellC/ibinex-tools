@@ -59,11 +59,28 @@ Route::middleware(['auth'])->group(function() {
     Route::post('/news/assign', [
         'as'    => 'news.assign-save',
         'uses'  => 'NewsController@storeAssign'
-    ])->middleware('can:admin');;
+    ])->middleware('can:admin');
 
+    Route::get('/news/{id}/finished', [
+        'as'    => 'news.finished',
+        'uses'  => 'NewsController@finish'
+    ])->middleware('can:admin');
+
+    Route::get('/news/{id}/published', [
+        'as'    => 'news.published',
+        'uses'  => 'NewsController@publish'
+    ])->middleware('can:admin_or_seo');
+
+    Route::get('/news/{id}/seo', [
+        'as'    => 'news.seo',
+        'uses'  => 'NewsController@seo'
+    ])->middleware('can:admin_or_seo');
+ 
+        
     Route::resources([
         'news'  => 'NewsController'
     ]);
 
+    
 
 });

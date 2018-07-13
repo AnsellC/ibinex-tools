@@ -33,6 +33,15 @@ class AuthServiceProvider extends ServiceProvider
         });     
         Gate::define('seo', function($user) {
             return $user->role == 'seo' ? true : false;
-        });           
+        });    
+        
+        Gate::define('admin_or_seo', function($user) {
+
+            if($user->role == 'admin' OR $user->role == 'seo')
+                return true;
+
+            return false;
+            
+        });    
     }
 }

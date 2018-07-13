@@ -48,7 +48,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        //
+        $news = News::findOrFail($id);
+        return view('news.show')->with('news', $news);
     }
 
     /**
@@ -129,6 +130,39 @@ class NewsController extends Controller
         $news->save();
 
         return redirect('/news')->withMsg('News source added to tracker.');
+
+    }
+
+
+    public function finish($id)
+    {
+        $news = News::findOrFail($id);
+        $news->is_finished = true;
+        $news->save();
+
+        return redirect()->back()->withMsg('Article marked as finished.');
+
+    }
+
+    
+    public function publish($id)
+    {
+        $news = News::findOrFail($id);
+        $news->is_published = true;
+        $news->save();
+
+        return redirect()->back()->withMsg('Article marked as published on news.ibinex.com.');
+
+    }
+
+
+    public function seo($id)
+    {
+        $news = News::findOrFail($id);
+        $news->is_seo_published = true;
+        $news->save();
+
+        return redirect()->back()->withMsg('Article marked as submitted to social media.');
 
     }
 }
