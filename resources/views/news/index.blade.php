@@ -86,7 +86,17 @@
                             <span class="icon has-text-danger"><i class="fa fa-times-circle"></i></span>
                         @endif
                     </td>
-                <td><a href="/admin/news/{{ $news->id }}/edit"><i class="fas fa-edit"></i></a> <a href="/admin/news/{{ $news->id }}/delete"><i class="fas fa-trash-alt"></i></a></td>
+                    <td>
+                        @if(Auth::user()->id == $news->id OR Auth::user()->can('admin'))
+                            <a href="/news/{{ $news->id }}/edit"><i class="fas fa-edit"></i></a>
+                        @endif
+                        @if( Auth::user()->can('admin') )
+                            <a href="/news/{{ $news->id }}/delete"><i class="fas fa-trash-alt"></i></a>
+                        @endif
+                        @if( Auth::user()->can('admin') OR Auth::user()->can('seo') )
+                            <a href="/news/{{ $news->id }}"><i class="far fa-eye"></i></a>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
     </tbody>
