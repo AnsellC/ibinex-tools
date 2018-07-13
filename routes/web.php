@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('/', function() {
+
+    return redirect('/news');
+    
+});
 
 Route::get('/login', function () {
 
@@ -45,22 +50,16 @@ Route::post('/login', function() {
 
 Route::middleware(['auth'])->group(function() {
 
-    //homepage
-    Route::get('/', function () {
 
-        return view('dashboard');
-    
-    });
- 
     Route::get('/news/assign', [
         'as'    => 'news.assign',
         'uses'  => 'NewsController@assign'
-    ]);
+    ])->middleware('can:admin');
 
     Route::post('/news/assign', [
         'as'    => 'news.assign-save',
         'uses'  => 'NewsController@storeAssign'
-    ]);
+    ])->middleware('can:admin');;
 
     Route::resources([
         'news'  => 'NewsController'

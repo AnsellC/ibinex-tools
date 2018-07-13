@@ -89,6 +89,6 @@
     </div>
 </section>
 <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-@stack('scripts')
+@stack('js')
 </body>
 </html>
