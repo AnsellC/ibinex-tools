@@ -72,7 +72,26 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->content);
+    
+        $news = News::findOrFail($id);
+
+        $news->title        = $request->title;
+        $news->lead         = $request->lead;
+        $news->content      = $request->content;
+        $news->is_finished  = $request->is_finished == 1 ? true : false;
+
+        
+
+        if( $request->hasFile('photo') && $request->file('photo')->isValid() ) {
+
+            //store the photo then save again
+            $path = $request->file('photo')->store('media');
+            $news->photo = $path;
+
+        }
+        $news->save();
+
+        return redirect('/')->withMsg('News item saved.');
     }
 
     /**
@@ -99,7 +118,7 @@ class NewsController extends Controller
 
         request()->validate([
 
-            'URL'   => 'required|url',
+            'URL'   => 'required|url|unique',
             'user_id'   => 'required|exists:users,id'
 
         ]);
