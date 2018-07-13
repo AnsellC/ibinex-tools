@@ -30,13 +30,13 @@
                         </span>
                         <span>News Tracker</span>
                     </a>
-                    <a class="navbar-item" href="/anime">
+                    <a class="navbar-item" href="/seo">
                         <span class="icon has-text-danger">
                             <i class="fas fa-level-up-alt"></i>
                         </span>
                         <span>SEO Tools</span>
                     </a>
-                    <a class="navbar-item" href="/anime">
+                    <a class="navbar-item" href="/users">
                         <span class="icon has-text-warning">
                             <i class="fas fa-users"></i>
                         </span>
