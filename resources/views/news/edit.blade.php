@@ -20,7 +20,7 @@ file.onchange = function(){
 
 @endpush
 
-<form method="POST" action="/news/{{ $news->id }}">
+<form method="POST" action="/news/{{ $news->id }}" enctype="multipart/form-data">
 @csrf
 @method('PATCH')
     <div class="field">
@@ -64,7 +64,7 @@ file.onchange = function(){
                     Upload a photo
                 </span>
                 </span>
-                <span class="file-name" id="file-name"></span>
+                <span class="file-name" id="file-name">{{ $news->photo ? $news->photo : 'Upload a photo' }}</span>
             </label>
         </div>  
     </div>

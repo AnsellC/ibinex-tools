@@ -83,7 +83,7 @@ class NewsController extends Controller
         
 
         if( $request->hasFile('photo') && $request->file('photo')->isValid() ) {
-
+            
             //store the photo then save again
             $path = $request->file('photo')->store('media');
             $news->photo = $path;
@@ -118,13 +118,13 @@ class NewsController extends Controller
 
         request()->validate([
 
-            'URL'   => 'required|url|unique',
+            'URL'   => 'required|url|unique:news',
             'user_id'   => 'required|exists:users,id'
 
         ]);
 
         $news = new News;
-        $news->url = request('URL');
+        $news->url = request('url');
         $news->user_id = request('user_id');
         $news->save();
 

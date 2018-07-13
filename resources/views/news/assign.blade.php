@@ -6,7 +6,7 @@
     <div class="field">
         <label class="label">News Source</label>
         <div class="control has-icons-left">
-            <input class="input" name="URL" type="text" placeholder="URL of news source...">
+            <input class="input" name="url" type="text" placeholder="URL of news source...">
             <span class="icon is-small is-left">
             <i class="fas fa-arrow-circle-right"></i>
             </span>
