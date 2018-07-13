@@ -1,7 +1,13 @@
 @extends('layout')
 @section('title', 'News Tracker')
 @section('content')
+@if( Auth::user()->can('admin') )
+<div class="has-text-right">
+    <a class="button" href="/news/assign">Add News Source</a>
+</div>
 
+
+@endif
 <h2 class="title">Assigned to me</h2>
 <table class="table is-fullwidth is-hoverable">
     <thead>
