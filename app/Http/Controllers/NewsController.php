@@ -119,7 +119,7 @@ class NewsController extends Controller
 
         request()->validate([
 
-            'URL'   => 'required|url|unique:news',
+            'url'   => 'required|url|unique:news',
             'user_id'   => 'required|exists:users,id'
 
         ]);
