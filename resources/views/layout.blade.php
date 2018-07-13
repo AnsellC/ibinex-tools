@@ -30,18 +30,22 @@
                         </span>
                         <span>News Tracker</span>
                     </a>
-                    <a class="navbar-item" href="/seo">
-                        <span class="icon has-text-danger">
-                            <i class="fas fa-level-up-alt"></i>
-                        </span>
-                        <span>SEO Tools</span>
-                    </a>
-                    <a class="navbar-item" href="/users">
-                        <span class="icon has-text-warning">
-                            <i class="fas fa-users"></i>
-                        </span>
-                        <span>Staff</span>
-                    </a>                    
+                    @if( Auth::user()->can('admin_or_seo') )
+                        <a class="navbar-item" href="/seo">
+                            <span class="icon has-text-danger">
+                                <i class="fas fa-level-up-alt"></i>
+                            </span>
+                            <span>SEO Tools</span>
+                        </a>
+                    @endif
+                    @if( Auth::user()->can('admin') )
+                        <a class="navbar-item" href="/users">
+                            <span class="icon has-text-warning">
+                                <i class="fas fa-users"></i>
+                            </span>
+                            <span>Staff</span>
+                        </a>     
+                    @endif               
                 </div>
                 
                 <div class="navbar-end">
