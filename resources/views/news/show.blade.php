@@ -43,9 +43,16 @@
     </div>
 <div class="columns">
     <div class="column has-text-centered">
-            <a class="button is-danger" href="/news/{{ $news->id }}/finished">Mark as finished article</a> 
-            <a class="button is-primary" href="/news/{{ $news->id }}/published">Mark as Published on news.ibinex.com</a> 
-            <a class="button is-link" href="/news/{{ $news->id }}/seo">Mark as Published on social media</a>
+            @if( (Auth::user()->id == $news->id OR Auth::user()->can('admin')) AND !$news->is_finished )
+                <a class="button is-danger" href="/news/{{ $news->id }}/finished">Mark as finished article</a>
+            @endif
+            @if( Auth::user()->can('admin_or_seo') )
+                @if( !$news->is_published )
+                    <a class="button is-primary" href="/news/{{ $news->id }}/published">Mark as Published on news.ibinex.com</a> 
+                @elseif( !$news->is_seo_published )
+                    <a class="button is-link" href="/news/{{ $news->id }}/seo">Mark as Published on social media</a>
+                @endif
+            @endif
     </div>
 </div>
 @endsection

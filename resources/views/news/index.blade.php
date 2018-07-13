@@ -8,7 +8,7 @@
         <tr>
             <th>date</th>
             <th>Source Website</th>
-            <th>Writer Status</th>
+            <th>Article Status</th>
             <th>Published</th>
             <th>SEO</th>
             <th>Actions</th>
@@ -40,7 +40,11 @@
                             <span class="icon has-text-danger"><i class="fa fa-times-circle"></i></span>
                         @endif
                     </td>
-                <td><a href="/news/{{ $news->id }}/edit"><i class="fa fa-pen-alt"></i></a></td>
+                <td>
+                    @if( !$news->is_published AND !$news->is_seo_published )
+                        <a href="/news/{{ $news->id }}/edit"><i class="fa fa-pen-alt"></i></a>
+                    @endif
+                    <a href="/news/{{ $news->id }}"><i class="far fa-eye"></i></a></td>
                 </tr>
             @endforeach
     </tbody>
@@ -53,7 +57,7 @@
             <th>date</th>
             <th>Source Website</th>
             <th>Assigned to</th>
-            <th>Writer Status</th>
+            <th>Article Status</th>
             <th>Published</th>
             <th>SEO</th>
             <th>Actions</th>
