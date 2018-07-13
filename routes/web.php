@@ -81,6 +81,9 @@ Route::middleware(['auth'])->group(function() {
         'news'  => 'NewsController'
     ]);
 
+    Route::resources([
+        'users' => 'UserController'
+    ]);
     
 
 });
