@@ -93,8 +93,9 @@
         </div>
     </div>
 </section>
+@stack('js')
 <script src="{{ asset('js/app.js') }}"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-@stack('js')
+
 </body>
 </html>

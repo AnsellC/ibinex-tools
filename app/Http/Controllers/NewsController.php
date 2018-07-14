@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\News;
 use App\User;
+use Carbon\Carbon;
 class NewsController extends Controller
 {
     /**
@@ -14,8 +15,75 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
-        return view('news.index')->with('newsitems', $news);
+        
+        //my news query
+        if( request('mine_show') !== null AND request('mine_show') == "all" ) {
+
+            $mine =  News::where('user_id', \Auth::user()->id)->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $mine_title = "Assigned to me: all";
+        }
+
+        elseif( request('mine_show') !== null AND request('mine_show') == "unfinished" ) {
+
+            $mine = News::where([
+                'user_id' => \Auth::user()->id,
+                'is_finished' => 0
+            ])->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+
+            $mine_title = "Assigned to me: all unfinished";
+        }
+        else {
+
+            $mine = News::where('user_id', \Auth::user()->id)->whereDate('created_at', Carbon::today())->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $mine_title = "Assigned to me: Today";
+        }
+        // all news query
+        if( request('show') !== null AND request('show') == "all" ) {
+            $news = News::orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $all_title = "All News Items";
+        }
+        //show all unfinished
+        elseif( request('show') !== null AND request('show') == "unfinished" ) {
+
+            $news = News::where([
+                'is_finished' => 0
+            ])->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $all_title = "All Unfinished";
+        }
+        //show all unpublished
+        elseif( request('show') !== null AND request('show') == "unpublished" ) {
+
+            $news = News::where([
+                'is_published' => 0
+            ])->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $all_title = "All Unpublished";
+
+        }
+        //show unfinished today
+        elseif( request('show') !== null AND request('show') == "unfinished_today" ) {
+
+            $news = News::where([
+                'is_finished' => 0
+            ])->orderBy('id', 'DESC')->whereDate('created_at', Carbon::today())->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $all_title = "All Unfinished Today";
+        }
+        //show unpublished today
+        elseif( request('show') !== null AND request('show') == "unpublished_today" ) {
+
+            $news = News::where([
+                'is_published' => 0
+            ])->orderBy('id', 'DESC')->whereDate('created_at', Carbon::today())->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $all_title = "All Unpublished Today";
+        }
+        else {
+            $news = News::orderBy('id', 'DESC')->whereDate('created_at', Carbon::today())->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+            $all_title = "All News Items Today";
+        }
+            
+ 
+ 
+              
+        return view('news.index')->with('newsitems', $news)->with('mine', $mine)->with('mine_title', $mine_title)->with('all_title', $all_title);
     }
 
     /**
