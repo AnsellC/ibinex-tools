@@ -42,6 +42,9 @@ class AuthServiceProvider extends ServiceProvider
 
             return false;
             
-        });    
+        }); 
+        Gate::define('my-news', function ($user, $news) {
+            return $user->id == $news->user_id;
+        });  
     }
 }

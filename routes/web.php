@@ -76,7 +76,7 @@ Route::middleware(['auth'])->group(function() {
         'uses'  => 'NewsController@seo'
     ])->middleware('can:admin_or_seo');
  
-        
+              
     Route::resources([
         'news'  => 'NewsController'
     ]);

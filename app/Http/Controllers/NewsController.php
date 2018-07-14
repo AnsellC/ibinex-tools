@@ -15,28 +15,69 @@ class NewsController extends Controller
      */
     public function index()
     {
-        
-        //my news query
-        if( request('mine_show') !== null AND request('mine_show') == "all" ) {
+        if(\Auth::user()->role == 'writer') {
+            //my news query
+            if( request('mine_show') !== null AND request('mine_show') == "all" ) {
 
-            $mine =  News::where('user_id', \Auth::user()->id)->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
-            $mine_title = "Assigned to me: all";
+                $mine =  News::where('user_id', \Auth::user()->id)->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+                $mine_title = "Assigned to me: all";
+            }
+
+            elseif( request('mine_show') !== null AND request('mine_show') == "unfinished" ) {
+
+                $mine = News::where([
+                    'user_id' => \Auth::user()->id,
+                    'is_finished' => 0
+                ])->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+
+                $mine_title = "Assigned to me: all unfinished";
+            }
+            else {
+
+                $mine = News::where('user_id', \Auth::user()->id)->whereDate('created_at', Carbon::today())->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+                $mine_title = "Assigned to me: Today";
+            }
+
+        }
+        elseif(\Auth::user()->role == 'seo') {
+
+            //my news query
+            if( request('mine_show') !== null AND request('mine_show') == "all" ) {
+
+                $mine =  News::where([
+                    'is_finished'  => 1,
+                    'is_published' => 0
+                ])
+                ->orWhere([
+                    'is_finished'      => 1,
+                    'is_seo_published' => 0,
+                                     
+                ])->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+                $mine_title = "Assigned to me: all";
+            }
+
+            elseif( request('mine_show') !== null AND request('mine_show') == "unfinished" ) {
+
+                $mine = News::where([
+                    'is_finished'  => 1,
+                    'is_published' => 0
+                ])
+                ->orWhere([
+                    'is_finished'      => 1,
+                    'is_seo_published' => 0,
+                ])
+                ->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+
+                $mine_title = "Assigned to me: all unfinished";
+            }
+            else {
+
+                $mine = News::where('is_finished', 1)->whereDate('created_at', Carbon::today())->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
+                $mine_title = "Assigned to me: Today";
+            }
+
         }
 
-        elseif( request('mine_show') !== null AND request('mine_show') == "unfinished" ) {
-
-            $mine = News::where([
-                'user_id' => \Auth::user()->id,
-                'is_finished' => 0
-            ])->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
-
-            $mine_title = "Assigned to me: all unfinished";
-        }
-        else {
-
-            $mine = News::where('user_id', \Auth::user()->id)->whereDate('created_at', Carbon::today())->orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
-            $mine_title = "Assigned to me: Today";
-        }
         // all news query
         if( request('show') !== null AND request('show') == "all" ) {
             $news = News::orderBy('id', 'DESC')->paginate(env('TABLE_ITEMS_PER_PAGE', 20));
@@ -129,6 +170,9 @@ class NewsController extends Controller
     public function edit($id)
     {
         $news = News::findOrFail($id);
+        if( $news->user_id != \Auth::user()->id )
+            return abort(405);
+
         return view('news.edit')->with('news', $news);
     }
 
@@ -143,7 +187,9 @@ class NewsController extends Controller
     {
     
         $news = News::findOrFail($id);
-
+        if( $news->user_id != \Auth::user()->id )
+            return abort(405);
+            
         $news->title        = $request->title;
         $news->lead         = $request->lead;
         $news->content      = $request->content;

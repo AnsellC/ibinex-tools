@@ -7,7 +7,7 @@
     </div>
 @endif
 
-@can('writer')
+@if( Auth::user()->can('writer') OR Auth::user()->can('seo') )
     <h2 class="title">{{ $mine_title }}</h2>
     <form method="get" action="/news">
         <div class="field">
@@ -66,7 +66,7 @@
                             @endif
                         </td>
                     <td>
-                        @if( !$news->is_published AND !$news->is_seo_published )
+                        @if( !$news->is_published AND !$news->is_seo_published AND Auth::user()->role != 'seo' )
                             <a href="/news/{{ $news->id }}/edit"><i class="fa fa-pen-alt"></i></a>
                         @endif
                         <a href="/news/{{ $news->id }}"><i class="far fa-eye"></i></a></td>
@@ -74,7 +74,7 @@
                 @endforeach
         </tbody>
     </table>
-@endcan
+@endif
 <h2 class="title">{{ $all_title }}</h2>
 <form method="get" action="/news">
     <div class="field">
@@ -138,7 +138,7 @@
                         @endif
                     </td>
                     <td>
-                        @if(Auth::user()->id == $news->id OR Auth::user()->can('admin'))
+                        @if(Auth::user()->id == $news->user_id OR Auth::user()->can('admin'))
                             <a href="/news/{{ $news->id }}/edit"><i class="fas fa-edit"></i></a>
                         @endif
                         @if( Auth::user()->can('admin') )
