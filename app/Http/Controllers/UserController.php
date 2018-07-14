@@ -53,7 +53,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->role = $request->role;
         $temp_password = str_random(8);
-        $user->password = $temp_password;
+        $user->password = bcrypt($temp_password);
         $user->save();
 
         return view('users.account-created')->with([
