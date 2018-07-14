@@ -123,7 +123,12 @@ class NewsController extends Controller
             
  
  
-              
+        if(\Auth::user()->role == 'admin') {
+
+            $mine_title = '';
+            $mine = [];
+        }
+             
         return view('news.index')->with('newsitems', $news)->with('mine', $mine)->with('mine_title', $mine_title)->with('all_title', $all_title);
     }
 
@@ -170,7 +175,7 @@ class NewsController extends Controller
     public function edit($id)
     {
         $news = News::findOrFail($id);
-        if( $news->user_id != \Auth::user()->id )
+        if( ($news->user_id != \Auth::user()->id) AND !\Auth::user()->role == 'admin' )
             return abort(405);
 
         return view('news.edit')->with('news', $news);
@@ -187,9 +192,9 @@ class NewsController extends Controller
     {
     
         $news = News::findOrFail($id);
-        if( $news->user_id != \Auth::user()->id )
+        if( ($news->user_id != \Auth::user()->id) AND !\Auth::user()->role == 'admin' )
             return abort(405);
-            
+
         $news->title        = $request->title;
         $news->lead         = $request->lead;
         $news->content      = $request->content;
@@ -217,7 +222,9 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = News::findOrFail($id);
+        $news->delete();
+        return redirect()->back()->withMsg('News item deleted.');
     }
 
 

@@ -31,7 +31,7 @@
     <div class="field">
         <label class="label">Photo</label>
         <div class="control">
-            {{ $news->photo }}
+            <img src="/{{ $news->photo }}">
         </div>
     </div>
     

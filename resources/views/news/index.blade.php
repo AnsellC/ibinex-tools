@@ -142,7 +142,11 @@
                             <a href="/news/{{ $news->id }}/edit"><i class="fas fa-edit"></i></a>
                         @endif
                         @if( Auth::user()->can('admin') )
-                            <a href="/news/{{ $news->id }}/delete"><i class="fas fa-trash-alt"></i></a>
+                        <form style="margin: 0px; padding: 0px; display: inline;" method="post" action="/news/{{ $news->id }}">
+                            @csrf
+                            @method('DELETE')
+                            <a class="delete-link" href="/news/{{ $news->id }}"><i class="fas fa-trash-alt"></i></a>
+                        </form>
                         @endif
                         @if( Auth::user()->can('admin') OR Auth::user()->can('seo') )
                             <a href="/news/{{ $news->id }}"><i class="far fa-eye"></i></a>
@@ -163,6 +167,14 @@
             if($(this).val() != '')
                 $(this).parent('div').parent('div').parent('form').submit();
         });
+        $('.delete-link').on('click', function(e){
+
+            e.preventDefault();
+            if(confirm('Are you sure you want to delete this news item?')) {
+                $(this).parent('form').submit();
+            }
+        });
     });
+
 </script>
 @endpush
