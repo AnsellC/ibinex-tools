@@ -12,7 +12,8 @@
 <table class="table is-fullwidth is-hoverable">
     <thead>
         <tr>
-            <th>date</th>
+            <th>Date</th>
+            <th>Last Modified</th>
             <th>Source Website</th>
             <th>Article Status</th>
             <th>Published</th>
@@ -24,6 +25,11 @@
             @foreach(Auth::user()->news AS $news)
                 <tr>
                     <th scope="row">{{ $news->created_at->toFormattedDateString() }}</th>
+                    <td>
+                        @if($news->created_at != $news->updated_at) 
+                            {{ $news->updated_at->diffForHumans() }}
+                        @endif
+                    </td>
                     <td><a href="{{ $news->url }}" target="_blank">{{ str_limit($news->url, 50) }}</a></td>
                     <td>
                         @if( $news->is_finished != 0 AND !empty($news->is_finished) )
@@ -60,7 +66,8 @@
 <table class="table is-fullwidth is-hoverable">
     <thead>
         <tr>
-            <th>date</th>
+            <th>Date</th>
+            <th>Last Modified</th>
             <th>Source Website</th>
             <th>Assigned to</th>
             <th>Article Status</th>
@@ -73,6 +80,11 @@
             @foreach($newsitems AS $news)
                 <tr>
                     <th scope="row">{{ $news->created_at->toFormattedDateString() }}</th>
+                    <td>
+                        @if($news->created_at != $news->updated_at) 
+                            {{ $news->updated_at->diffForHumans() }}
+                        @endif
+                    </td>
                     <td><a href="{{ $news->url }}" target="_blank">{{ str_limit($news->url, 50) }}</a></td>
                     <td>{{ $news->user->name }}</td>
                     <td>
