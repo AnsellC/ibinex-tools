@@ -7,7 +7,7 @@
     </div>
 @endif
 
-@can('admin')
+@can('writer')
     <h2 class="title">{{ $mine_title }}</h2>
     <form method="get" action="/news">
         <div class="field">
