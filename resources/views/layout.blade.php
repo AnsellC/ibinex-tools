@@ -10,89 +10,94 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-<header>
-    <nav id="navbar" class="navbar has-shadow is-spaced">
-        <div class="container">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="/">
-                    Ibinex News Tools
-                </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item" href="/news">
-                        <span class="icon has-text-primary">
-                            <i class="fas fa-book"></i>
-                        </span>
-                        <span>News Tracker</span>
+<div id="main">
+    <header>
+        <nav id="navbar" class="navbar has-shadow is-spaced">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="/">
+                        Ibinex News Tools
                     </a>
-                    @if( Auth::user()->can('admin_or_seo') )
-                        <a class="navbar-item" href="/seo">
-                            <span class="icon has-text-danger">
-                                <i class="fas fa-level-up-alt"></i>
-                            </span>
-                            <span>SEO Tools</span>
-                        </a>
-                    @endif
-                    @if( Auth::user()->can('admin') )
-                        <a class="navbar-item" href="/users">
-                            <span class="icon has-text-warning">
-                                <i class="fas fa-users"></i>
-                            </span>
-                            <span>Staff</span>
-                        </a>     
-                    @endif               
+                    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
                 </div>
-                
-                <div class="navbar-end">
-                        @auth
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                                {{ Auth::user()->name }}
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="/news">
+                            <span class="icon has-text-primary">
+                                <i class="fas fa-book"></i>
+                            </span>
+                            <span>News Tracker</span>
+                        </a>
+                        @if( Auth::user()->can('admin_or_seo') )
+                            <a class="navbar-item" href="/seo">
+                                <span class="icon has-text-danger">
+                                    <i class="fas fa-level-up-alt"></i>
+                                </span>
+                                <span>SEO Tools</span>
                             </a>
-                            
-                            <div class="navbar-dropdown is-right">
+                        @endif
+                        @if( Auth::user()->can('admin') )
+                            <a class="navbar-item" href="/users">
+                                <span class="icon has-text-warning">
+                                    <i class="fas fa-users"></i>
+                                </span>
+                                <span>Staff</span>
+                            </a>     
+                        @endif               
+                    </div>
                     
-                                <a class="navbar-item" href="/logout">
-                                    <span>
-                                        <span class="icon has-text-bootstrap">
-                                                <i class="fas fa-sign-out-alt"></i>
-                                        </span>
-                                        <strong>Log Out</strong>
-
-                                    </span>
+                    <div class="navbar-end">
+                            @auth
+                            <div class="navbar-item has-dropdown is-hoverable">
+                                <a class="navbar-link">
+                                    {{ Auth::user()->name }}
                                 </a>
+                                
+                                <div class="navbar-dropdown is-right">
+                        
+                                    <a class="navbar-item" href="/logout">
+                                        <span>
+                                            <span class="icon has-text-bootstrap">
+                                                    <i class="fas fa-sign-out-alt"></i>
+                                            </span>
+                                            <strong>Log Out</strong>
+
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        @endauth
+                    </div>
+                </div>     
+            </div>        
+        </nav>                       
+    </header>
+    <section id="content" class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                        @if(View::hasSection('title'))
+                            <h1 class="title">@yield('title')</h1>
+                        @endif
+                        <div class="card">
+                            <div class="card-content">
+                                @include('global.msg')
+                                @include('global.error')
+                                @yield('content')
                             </div>
                         </div>
-                    @endauth
                 </div>
-            </div>     
-        </div>        
-    </nav>                       
-</header>
-<section id="content" class="section">
-    <div class="container">
-        <div class="columns">
-            <div class="column">
-                    @if(View::hasSection('title'))
-                        <h1 class="title">@yield('title')</h1>
-                    @endif
-                    <div class="card">
-                        <div class="card-content">
-                            @include('global.msg')
-                            @include('global.error')
-                            @yield('content')
-                        </div>
-                    </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <footer class="footer has-text-centered">
+        <i class="fas fa-heart has-text-danger"></i> Ibinex News &copy; 2018.
+    </footer>
+</div>
 @stack('js')
 <script src="{{ asset('js/app.js') }}"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
